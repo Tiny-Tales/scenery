@@ -1,6 +1,6 @@
-import { Application, Assets, type ProgressCallback } from "pixi.js"
+import { Application, Assets, Container, type ProgressCallback } from "pixi.js"
 import { TinyAssets, TinyCanvasStyle } from "./types"
-import * as Display from "./display"
+import * as Scenes from "./scenes"
 
 let _app: Application
 let _width: number
@@ -24,7 +24,7 @@ export const init = (
     height: height,
   })
   // Assign active scene
-  const scene = Display.activeScene()
+  const scene = Scenes.active()
   _app.stage.addChild(scene.container)
   // Assign update callback if scene has one
   if (scene.scene.update) {
@@ -33,8 +33,19 @@ export const init = (
   // Resize canvas
   _resize()
   window.addEventListener("resize", () => _resize())
+  // Run active scene
+  Scenes.init()
+  // Start update ticker
+  _app.ticker.add(_update)
 
   return _app
+}
+
+export const add = (c: Container): void => {
+  _app.stage.addChild(c)
+}
+export const remove = (c: Container): void => {
+  _app.stage.removeChild(c)
 }
 
 export const assignAssets = (type: string, assets: TinyAssets): void => {
@@ -46,6 +57,12 @@ export const loadAssets = async (
   callback?: ProgressCallback
 ): Promise<any> => {
   return Assets.loadBundle(type, callback)
+}
+
+const _update = (framesPassed: number): void => {
+  if (Scenes.active().scene.update) {
+    Scenes.active().scene.update?.(framesPassed)
+  }
 }
 
 const _resize = (): void => {
