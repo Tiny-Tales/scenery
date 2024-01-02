@@ -1,2 +1,2 @@
-export * as display from './display'
-export * as manager from './manager'
+export * as display from "./display"
+export * as manager from "./manager"

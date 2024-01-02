@@ -16,9 +16,17 @@
     "tinytales"
   ],
   "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "files": [
-    "dist",
+    "dist/**/*",
     "examples",
     "src"
   ],
@@ -27,10 +35,11 @@
     "test": "COMING SOON TM"
   },
   "devDependencies": {
+    "prettier": "3.1.1",
+    "tslib": "^2.6.2",
+    "tsup": "^8.0.1",
     "typescript": "^5.2.2",
     "vite": "^5.0.8",
-    "tsup": "^8.0.1",
-    "prettier": "3.1.1",
     "vitest": "^1.1.0"
   },
   "dependencies": {

@@ -10,12 +10,11 @@ export interface Scene {
   readonly name: string
   active?: boolean
   init(): void
-  update(elapsedFrames: number): void
+  update?(elapsedFrames: number): void
 }
 type SceneInternal = {
   container: DisplayObject
-  name: string
-  active: boolean
+  scene: Scene
 }
 
 type InternalScenes = { [name: string]: SceneInternal }
@@ -36,12 +35,11 @@ export const add = (scene: Scene): void => {
   // Transform scene internal
   const s = <SceneInternal>{
     container: new Container(),
-    name: scene.name,
-    active: scene.active ?? false,
+    scene: scene,
   }
   // Save
   if (scene.active === true) _current = s
-  _scenes[s.name] = s
+  _scenes[s.scene.name] = s
 }
 
 export const switchTo = (sceneName: string): void => {
@@ -53,4 +51,10 @@ export const switchTo = (sceneName: string): void => {
   _app.stage.addChild(_scenes[sceneName]!.container)
 
   _current = _scenes[sceneName] as SceneInternal
+}
+
+export const activeScene = (): SceneInternal => {
+  console.log("all scenes", _scenes)
+  console.log("active", _current)
+  return _current
 }
