@@ -1,13 +1,24 @@
-import { Application, Container, DisplayObject } from "pixi.js";
-import { TinyScene } from "./types";
+import { Application, Container, DisplayObject } from "pixi.js"
+import { TinyDisplay } from "./types"
 
+export interface Widget {
+  readonly container: Container
+  addGui(gui: TinyDisplay): void
+}
+
+export interface Scene {
+  readonly name: string
+  active?: boolean
+  init(): void
+  update(elapsedFrames: number): void
+}
 type SceneInternal = {
-  container: DisplayObject,
-  name: string,
+  container: DisplayObject
+  name: string
   active: boolean
 }
 
-type InternalScenes =  { [name: string]: SceneInternal }
+type InternalScenes = { [name: string]: SceneInternal }
 const _scenes: InternalScenes = {}
 
 let _current: SceneInternal
@@ -18,7 +29,7 @@ export const registerApp = (app: Application): void => {
   _app = app
 }
 
-export const add = (scene: TinyScene): void => {
+export const add = (scene: Scene): void => {
   if (_scenes[scene.name] !== undefined) {
     throw new Error(`Scene with name ${scene.name} already exists`)
   }
@@ -26,7 +37,7 @@ export const add = (scene: TinyScene): void => {
   const s = <SceneInternal>{
     container: new Container(),
     name: scene.name,
-    active: scene.active ?? false
+    active: scene.active ?? false,
   }
   // Save
   if (scene.active === true) _current = s
@@ -39,7 +50,7 @@ export const switchTo = (sceneName: string): void => {
   }
 
   _app.stage.removeChild(_current.container)
-  _app.stage.addChild(_scenes[sceneName].container)
+  _app.stage.addChild(_scenes[sceneName]!.container)
 
-  _current = _scenes[sceneName]
+  _current = _scenes[sceneName] as SceneInternal
 }

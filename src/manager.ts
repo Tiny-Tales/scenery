@@ -1,33 +1,29 @@
-import { Application, Assets, ProgressCallback } from "pixi.js"
-import { TinyCanvasStyle, TinyAssets } from "./types"
+import { Application, Assets, type ProgressCallback } from "pixi.js"
+import { TinyAssets, TinyCanvasStyle } from "./types"
 
 let _app: Application
 let _width: number
 let _height: number
 
-export const init = (canvas: HTMLCanvasElement, width: number, height: number): Application => {
+export const init = (
+  canvas: HTMLCanvasElement,
+  width: number,
+  height: number
+): Application => {
   _app = new Application({
-    background: '#000',
+    background: "#000",
     resolution: window.devicePixelRatio || 1,
     autoDensity: true,
     antialias: false,
     view: canvas,
     width: width,
-    height: height
+    height: height,
   })
-  
+
   _resize()
   window.addEventListener("resize", () => _resize())
 
   return _app
-}
-
-export const assignAssets = (type: string, assets: TinyAssets): void => {
-  Assets.addBundle(type, assets)
-}
-
-export const loadAssets = async (type: string, callback?: ProgressCallback): Promise<any> => {
-  return Assets.loadBundle(type, callback)
 }
 
 /*
@@ -37,8 +33,14 @@ export const assignGame = (game: DisplayObject): void => {
 }*/
 
 const _resize = (): void => {
-  const screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
-  const screenHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+  const screenWidth = Math.max(
+    document.documentElement.clientWidth,
+    window.innerWidth || 0
+  )
+  const screenHeight = Math.max(
+    document.documentElement.clientHeight,
+    window.innerHeight || 0
+  )
 
   const scale = Math.min(screenWidth / _width, screenHeight / _height)
 
@@ -55,3 +57,13 @@ const _resize = (): void => {
   appStyle!.marginTop = appStyle!.marginBottom = `${verticalMargin}px`
 }
 
+export const assignAssets = (type: string, assets: TinyAssets): void => {
+  Assets.addBundle(type, assets)
+}
+
+export const loadAssets = async (
+  type: string,
+  callback?: ProgressCallback
+): Promise<any> => {
+  return Assets.loadBundle(type, callback)
+}
