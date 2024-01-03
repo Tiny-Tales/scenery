@@ -15,5 +15,5 @@ export const zzt = {
   },
 }
 
-export { Widget, Scene } from "./scenes"
+export { Widget, Scene, DrawReference } from "./scenes"
 export * from "./types"

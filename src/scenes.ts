@@ -1,10 +1,9 @@
 import { Container } from "pixi.js"
 import * as Core from "./core"
-import { TinyDisplay } from "./types"
 
 export interface Widget {
   readonly name: string
-  gui(): TinyDisplay
+  draw(parent: DrawReference): void
 }
 
 export interface Scene {
@@ -14,12 +13,22 @@ export interface Scene {
   update?(elapsedFrames: number): void
 }
 
+export type DrawReference = {
+  width: number
+  height: number
+  container: Container
+}
+
 type SceneInternal = {
+  width: number
+  height: number
   container: Container
   scene: Scene
   widgets: Array<WidgetInternal>
 }
 type WidgetInternal = {
+  width: number
+  height: number
   container: Container
   widget: Widget
 }
@@ -34,7 +43,16 @@ export const init = (): void => {
     throw new Error("No active scene to run")
   }
 
+  _current.width = Core.width()
+  _current.height = Core.height()
+
   _current.scene.init()
+  _current.widgets.forEach((w: WidgetInternal) => {
+    if (w.width <= 0) w.width = Core.width()
+    if (w.height <= 0) w.height = Core.height()
+
+    w.widget.draw({ container: w.container, width: w.width, height: w.height })
+  })
 }
 
 export const addScene = (scene: Scene): void => {
@@ -46,7 +64,11 @@ export const addScene = (scene: Scene): void => {
     container: new Container(),
     scene: scene,
     widgets: [],
+    // Dimensions get set during init
+    width: 0,
+    height: 0,
   }
+  s.container.name = scene.name
   // Save
   if (scene.active === true) _current = s
   _scenes[s.scene.name] = s
@@ -60,10 +82,15 @@ export const addWidget = (widget: Widget, sceneName: string): void => {
   const w = <WidgetInternal>{
     container: new Container(),
     widget: widget,
+    // Dimensions get set during init
+    width: 0,
+    height: 0,
   }
+  w.container.name = widget.name
   _scenes[sceneName].widgets.push(w)
   // Add widget to scene stage
   _scenes[sceneName].container.addChild(w.container)
+  console.log("scene container", _scenes[sceneName].container)
 }
 
 export const switchTo = (sceneName: string): void => {
@@ -75,7 +102,7 @@ export const switchTo = (sceneName: string): void => {
   Core.add(_scenes[sceneName]!.container)
 
   _current = _scenes[sceneName] as SceneInternal
-  _current.scene.init()
+  init()
 }
 
 export const active = (): SceneInternal => {

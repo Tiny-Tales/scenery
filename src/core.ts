@@ -6,6 +6,9 @@ let _app: Application
 let _width: number
 let _height: number
 
+export const width = (): number => _width
+export const height = (): number => _height
+
 export const init = (
   canvas: HTMLCanvasElement,
   width: number,

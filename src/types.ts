@@ -1,4 +1,4 @@
-import { type ICanvasStyle, Graphics } from "pixi.js"
+import { type ICanvasStyle, Graphics, Container } from "pixi.js"
 
 export type TinyAssets = { [name: string]: string }
 
@@ -9,4 +9,4 @@ export interface TinyCanvasStyle extends ICanvasStyle {
   marginBottom: string
 }
 
-export type TinyDisplay = Graphics
+export type TinyDisplay = Graphics | Container
