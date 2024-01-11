@@ -69,7 +69,6 @@ const _update = (framesPassed: number): void => {
 }
 
 const _resize = (): void => {
-  console.log("RESIZING")
   const screenWidth = Math.max(
     document.documentElement.clientWidth,
     window.innerWidth || 0

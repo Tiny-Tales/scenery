@@ -13,10 +13,12 @@ export interface Scene {
   update?(elapsedFrames: number): void
 }
 
+type Position = { x: number; y: number }
+type Dimensions = { w: number; h: number }
 export type DrawReference = {
-  width: number
-  height: number
   container: Container
+  position: Position
+  dimensions: Dimensions
 }
 
 type SceneInternal = {
@@ -51,7 +53,11 @@ export const init = (): void => {
     if (w.width <= 0) w.width = Core.width()
     if (w.height <= 0) w.height = Core.height()
 
-    w.widget.draw({ container: w.container, width: w.width, height: w.height })
+    w.widget.draw({
+      container: w.container,
+      dimensions: { w: w.width, h: w.height },
+      position: { x: 0, y: 0 },
+    })
   })
 }
 
@@ -90,7 +96,6 @@ export const addWidget = (widget: Widget, sceneName: string): void => {
   _scenes[sceneName].widgets.push(w)
   // Add widget to scene stage
   _scenes[sceneName].container.addChild(w.container)
-  console.log("scene container", _scenes[sceneName].container)
 }
 
 export const switchTo = (sceneName: string): void => {
