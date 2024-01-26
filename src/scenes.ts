@@ -1,4 +1,4 @@
-import { Container } from "pixi.js"
+import { Container, Graphics } from "pixi.js"
 import * as Core from "./core"
 
 export interface Widget {
@@ -15,12 +15,12 @@ export interface Scene {
 
 type Position = { x: number; y: number }
 type Dimensions = { w: number; h: number }
-export type DrawReference = {
-  container: Container
-  position: Position
+export interface RenderReference {
+  name: string
+  container: Graphics
   dimensions: Dimensions
+  position: Position
 }
-
 type SceneInternal = {
   width: number
   height: number
