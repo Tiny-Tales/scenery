@@ -1,9 +1,9 @@
 import * as display from './display'
 import * as manager from './manager'
 
-const zzt = {
+const scenery = {
     display: display,
     manager: manager
 }
 
-export default zzt
+export default scenery 

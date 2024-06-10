@@ -1,19 +1,18 @@
 {
-  "name": "@tinytales/zzzt",
+  "name": "@tinytales/scenery",
   "version": "0.1.0",
-  "description": "Tiny framework for pixijs goes zZt",
+  "description": "Tiny game framework",
   "author": "Cristian Cornea",
-  "email": "tinytales@mailbox.org",
+  "email": "contact@corneascorner.dev",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tinytales/zzt.git"
+    "url": "git+https://github.com/tinytales/scenery.git"
   },
   "keywords": [
-    "pixijs",
     "game",
-    "canvas",
-    "tinytales"
+    "framework",
+    "js"
   ],
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -40,13 +39,14 @@
     "test": "COMING SOON TM"
   },
   "devDependencies": {
+    "prettier": "3.1.1",
+    "tsup": "^8.0.1",
     "typescript": "^5.2.2",
     "vite": "^5.0.8",
-    "tsup": "^8.0.1",
-    "prettier": "3.1.1",
     "vitest": "^1.1.0"
   },
   "dependencies": {
+    "@tinytales/_underline": "^0.3.0",
     "pixi.js": "^7.3.2"
   }
 }
