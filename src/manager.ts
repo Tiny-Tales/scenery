@@ -5,17 +5,20 @@ let _app: Application
 let _width: number
 let _height: number
 
-export const init = (canvas: HTMLCanvasElement, width: number, height: number): Application => {
-  _app = new Application({
+export const init = async (domSelector: string , width: number, height: number): Promise<Application> => {
+  // Init app
+  _app = new Application() 
+  await _app.init({
     background: '#000',
     resolution: window.devicePixelRatio || 1,
     autoDensity: true,
     antialias: false,
-    view: canvas,
     width: width,
     height: height
   })
-  
+  document.querySelector(domSelector)?.appendChild(_app.canvas)
+ 
+  // Init resize
   _resize()
   window.addEventListener("resize", () => _resize())
 
@@ -29,12 +32,6 @@ export const assignAssets = (type: string, assets: TinyAssets): void => {
 export const loadAssets = async (type: string, callback?: ProgressCallback): Promise<any> => {
   return Assets.loadBundle(type, callback)
 }
-
-/*
-export const assignGame = (game: DisplayObject): void => {
-  _app.stage.addChild(game)
-  _app.ticker.add(game.update)
-}*/
 
 const _resize = (): void => {
   const screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
@@ -54,4 +51,3 @@ const _resize = (): void => {
   appStyle!.marginLeft = appStyle!.marginRight = `${horizontalMargin}px`
   appStyle!.marginTop = appStyle!.marginBottom = `${verticalMargin}px`
 }
-

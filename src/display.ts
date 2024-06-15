@@ -1,8 +1,8 @@
-import { Application, Container, DisplayObject } from "pixi.js";
+import { Application, Container } from "pixi.js";
 import { TinyScene } from "./types";
 
 type SceneInternal = {
-  container: DisplayObject,
+  container: Container,
   name: string,
   active: boolean
 }
@@ -11,7 +11,6 @@ type InternalScenes =  { [name: string]: SceneInternal }
 const _scenes: InternalScenes = {}
 
 let _current: SceneInternal
-
 let _app: Application
 
 export const registerApp = (app: Application): void => {

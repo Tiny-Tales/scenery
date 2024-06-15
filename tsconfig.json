@@ -1,21 +1,33 @@
 {
-
-  "include": ["src", "tsup.config.js", "vitest.config.ts"],
-  "exclude": ["node_modules", "dist"],
+  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
     "module": "ESNext",
-    "lib": ["ESNext", "DOM"],
-    "skipLibCheck": true,
-
-    "moduleResolution": "node",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-
+    "sourceMap": true,
+    "importHelpers": true,
+    "declaration": true,
+    "rootDir": "./src",
+    "outDir": "./dist/esm",
     "strict": true,
+    "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   },
+  "include": [
+    "src",
+    "tsup.config.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "vitest.config.ts",
+    "vitest.setup.ts"
+  ],
 }
