@@ -1,5 +1,5 @@
 {
-  "name": "@tinytales/scenery",
+  "name": "@senti/scenery",
   "version": "0.1.0",
   "description": "Tiny game framework",
   "author": "Cristian Cornea",
@@ -7,7 +7,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tinytales/scenery.git"
+    "url": "git+https://github.com/senti-studio/scenery.git"
   },
   "keywords": [
     "game",
@@ -46,7 +46,7 @@
     "vitest": "^1.1.0"
   },
   "dependencies": {
-    "@tinytales/_underline": "^0.3.0",
+    "@senti/_underline": "^0.3.0",
     "pixi.js": "^7.3.2"
   }
 }
